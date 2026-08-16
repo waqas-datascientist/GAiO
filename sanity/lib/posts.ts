@@ -33,6 +33,7 @@ export type InsightPost = {
   views: number;
   comments: number;
   imageUrl: string | null;
+  imageAlt: string;
   body?: PortableTextBlock[] | string[];
   source: "sanity" | "sample";
 };
@@ -52,6 +53,7 @@ type SanityPostDoc = {
   views?: number | null;
   comments?: number | null;
   mainImage?: SanityImageSource | null;
+  imageAlt?: string | null;
   body?: PortableTextBlock[] | null;
 };
 
@@ -71,6 +73,7 @@ function sampleToInsight(article: Article, index: number): InsightPost {
     views: 120 + index * 40,
     comments: 2 + index,
     imageUrl: null,
+    imageAlt: article.title,
     body: article.body,
     source: "sample",
   };
@@ -92,7 +95,8 @@ function mapSanityPost(doc: SanityPostDoc): InsightPost | null {
     likes: doc.likes ?? 0,
     views: doc.views ?? 0,
     comments: doc.comments ?? 0,
-    imageUrl: resolveImageUrl(doc.mainImage, (b) => b.width(800)),
+    imageUrl: resolveImageUrl(doc.mainImage, (b) => b.width(1600)),
+    imageAlt: doc.imageAlt?.trim() || doc.title,
     body: doc.body ?? undefined,
     source: "sanity",
   };

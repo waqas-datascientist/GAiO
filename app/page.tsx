@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { LayoutFrame, CTA } from "@/components/page-elements";
@@ -9,6 +10,10 @@ import { AuraFeaturedBadge } from "@/components/aura-featured-badge";
 import { CountUp, EngineCloud, HeroGeoMap, Highlighter, KineticText, LineShadowText, MethodFlow, MorphStatement, PixelProof, Text3DFlip, TextReveal } from "@/components/visuals";
 import { blogHref, blogListingHref, faqs, methodSteps, proofs, services, team, testimonials } from "@/lib/content";
 import { getLatestInsightPosts } from "@/sanity/lib/posts";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 /** Refresh homepage Insights after Studio publishes. */
 export const revalidate = 60;

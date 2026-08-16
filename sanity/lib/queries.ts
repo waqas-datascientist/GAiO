@@ -18,7 +18,8 @@ const postFields = /* groq */ `
     comments,
     0
   ),
-  "mainImage": select(defined(mainImage.asset) => mainImage, null)
+  "mainImage": select(defined(mainImage.asset) => mainImage, null),
+  "imageAlt": coalesce(mainImage.alt, "")
 `;
 
 /** All published posts for /blog — no artificial cap. */

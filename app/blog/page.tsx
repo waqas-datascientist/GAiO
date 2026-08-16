@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 import { LayoutFrame, PageHero } from "@/components/page-elements";
 import { BlogPostCard } from "@/components/blog-post-card";
 import { blogHref } from "@/lib/content";
 import { getInsightPosts } from "@/sanity/lib/posts";
 
-export const metadata = { title: "Blog" };
+export const metadata: Metadata = {
+  title: "Blog",
+  description:
+    "Practical guides to Generative Engine Optimization, AI search visibility, citation-ready content, and measurement.",
+  alternates: { canonical: "/blog" },
+};
 
 /** Refresh listing after Studio publishes (also set on Sanity fetches). */
 export const revalidate = 60;

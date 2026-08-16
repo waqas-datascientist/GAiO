@@ -132,3 +132,63 @@ export function buildSiteJsonLd() {
     ],
   };
 }
+
+export type BlogPostingJsonLdInput = {
+  title: string;
+  description: string;
+  slug: string;
+  author: string;
+  category: string;
+  publishedAt: string | null;
+  updatedAt: string | null;
+  imageUrl: string | null;
+  imageAlt: string;
+};
+
+/** Per-article structured data for rich search and answer-engine understanding. */
+export function buildBlogPostingJsonLd(input: BlogPostingJsonLdInput) {
+  const canonicalUrl = absoluteUrl(`/blog/${input.slug}`);
+  const organizationId = `${siteUrl}/#organization`;
+  const authorName = input.author.trim() || siteName;
+  const isOrganization =
+    authorName === siteName || authorName === "Signal / Proof";
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${canonicalUrl}#article`,
+    headline: input.title,
+    description: input.description,
+    url: canonicalUrl,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": canonicalUrl,
+    },
+    datePublished: input.publishedAt ?? undefined,
+    dateModified: input.updatedAt ?? input.publishedAt ?? undefined,
+    author: isOrganization
+      ? {
+          "@type": "Organization",
+          "@id": organizationId,
+          name: siteName,
+        }
+      : {
+          "@type": "Person",
+          name: authorName,
+        },
+    publisher: {
+      "@type": "Organization",
+      "@id": organizationId,
+      name: siteName,
+    },
+    image: input.imageUrl
+      ? {
+          "@type": "ImageObject",
+          url: input.imageUrl,
+          caption: input.imageAlt || input.title,
+        }
+      : undefined,
+    articleSection: input.category,
+    inLanguage: "en",
+  };
+}
