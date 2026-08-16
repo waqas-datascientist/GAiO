@@ -9,9 +9,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: "GAiO — Generative AI Optimization", template: "%s | GAiO" },
   description: siteTagline,
-  alternates: {
-    canonical: "/",
-  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
