@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Mail } from "lucide-react";
 import styled from "styled-components";
 
@@ -99,12 +100,17 @@ export function TeamCard({
           </Link>
         )}
 
-        <div className="profile-pic" aria-hidden="true">
+        <div className="profile-pic">
           {imageSrc ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img className="avatar-img" src={imageSrc} alt="" />
+            <Image
+              className="avatar-img"
+              src={imageSrc}
+              alt={`${name} portrait`}
+              fill
+              sizes="280px"
+            />
           ) : (
-            <div className="avatar-face">
+            <div className="avatar-face" aria-hidden="true">
               <span className="avatar-initials">{initials}</span>
               <span className="avatar-role">{role}</span>
             </div>

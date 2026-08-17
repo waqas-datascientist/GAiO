@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import { AiOverviewProofList } from "@/components/ai-overview-proof";
 import { LayoutFrame } from "@/components/page-elements";
 import { NewsletterSignup } from "@/components/newsletter-signup";
+import { TeamCard } from "@/components/team-card";
+import { team } from "@/lib/content";
 import { authorityPhases, authorityTerms, editorialSources, topicClusters } from "@/lib/editorial";
 import { absoluteUrl, siteName } from "@/lib/site";
 
@@ -39,8 +42,18 @@ export default function AuthorityEnginePage() {
     mainEntityOfPage: url,
     datePublished: publishedAt,
     dateModified: publishedAt,
-    author: { "@type": "Organization", name: "GAiO Editorial Desk", url: absoluteUrl("/authors/editorial-desk") },
-    editor: { "@type": "Organization", name: "GAiO Editorial Desk", url: absoluteUrl("/authors/editorial-desk") },
+    author: {
+      "@type": "Person",
+      name: "Waqas K.",
+      url: absoluteUrl("/authors/waqas-k"),
+      image: absoluteUrl("/team/waqas-k.png"),
+    },
+    editor: {
+      "@type": "Person",
+      name: "Afnan K.",
+      url: absoluteUrl("/authors/afnan-k"),
+      image: absoluteUrl("/team/afnan-k.png"),
+    },
     publisher: { "@id": `${absoluteUrl()}/#organization` },
     about: topicClusters.map((topic) => ({ "@type": "Thing", name: topic.name })),
   };
@@ -151,6 +164,46 @@ export default function AuthorityEnginePage() {
                 </a>
               ))}
             </aside>
+          </div>
+        </section>
+
+        <section className="section section-dark">
+          <div className="wrap">
+            <div className="split-head">
+              <div>
+                <p className="eyebrow">Original proof, shown in context</p>
+                <h2 className="display section-title">See the screenshots behind the authority claim.</h2>
+              </div>
+              <p className="lede">These live Google AI Overview observations show GAiO Engine being cited for relevant questions. Each screenshot keeps the query, source, date-sensitive context, and limitation visible.</p>
+            </div>
+            <AiOverviewProofList variant="evidence" />
+          </div>
+        </section>
+
+        <section className="section section-muted">
+          <div className="wrap">
+            <div className="split-head">
+              <div>
+                <p className="eyebrow">Named authors and editors</p>
+                <h2 className="display section-title">The people accountable for the method.</h2>
+              </div>
+              <p className="lede">Waqas K. leads the technical implementation and evidence systems. Afnan K. shapes the strategy, editorial standard, and commercial direction.</p>
+            </div>
+            <div className="team-grid">
+              {team.map((person) => (
+                <TeamCard
+                  key={person.name}
+                  name={person.name}
+                  role={person.role}
+                  about={person.about}
+                  initials={person.initials}
+                  avatarTone={person.avatarTone}
+                  email={person.email}
+                  imageSrc={person.imageSrc}
+                  imagePosition={person.imagePosition}
+                />
+              ))}
+            </div>
           </div>
         </section>
 
