@@ -8,6 +8,8 @@ import {
   siteTagline,
   siteUrl,
 } from "@/lib/site";
+import { getEditorialProfile, getTopicCluster, type TopicCluster } from "@/lib/editorial";
+import type { InsightPost } from "@/sanity/lib/posts";
 
 /** Sitewide Organization / WebSite / ProfessionalService graph for AI + search grounding. */
 export function buildSiteJsonLd() {
@@ -84,7 +86,7 @@ export function buildSiteJsonLd() {
         areaServed: "Worldwide",
         hasOfferCatalog: {
           "@type": "OfferCatalog",
-          name: "GAiO GEO services",
+          name: `${siteName} GEO services`,
           itemListElement: [
             {
               "@type": "Offer",
@@ -130,5 +132,61 @@ export function buildSiteJsonLd() {
         },
       },
     ],
+  };
+}
+
+/** Article-level graph mirrors the authorship, dates, topic, and image visible on the page. */
+export function buildArticleJsonLd(post: InsightPost) {
+  const author = getEditorialProfile(post.author);
+  const editor = getEditorialProfile(post.editor);
+  const topic = getTopicCluster(post.topic);
+  const url = absoluteUrl(`/blog/${post.slug}`);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    headline: post.title,
+    description: post.excerpt,
+    mainEntityOfPage: url,
+    url,
+    ...(post.publishedAt ? { datePublished: post.publishedAt } : {}),
+    ...(post.updatedAt || post.publishedAt
+      ? { dateModified: post.updatedAt || post.publishedAt }
+      : {}),
+    ...(post.imageUrl ? { image: [post.imageUrl] } : {}),
+    author: {
+      "@type": author.slug === "editorial-desk" ? "Organization" : "Person",
+      name: author.name,
+      url: absoluteUrl(`/authors/${author.slug}`),
+    },
+    editor: {
+      "@type": editor.slug === "editorial-desk" ? "Organization" : "Person",
+      name: editor.name,
+      url: absoluteUrl(`/authors/${editor.slug}`),
+    },
+    publisher: { "@id": `${siteUrl}/#organization` },
+    articleSection: topic?.name || post.category,
+    keywords: ["Generative Engine Optimization", post.category, topic?.name].filter(Boolean),
+    ...(topic ? { isPartOf: absoluteUrl(`/topics/${topic.slug}`) } : {}),
+  };
+}
+
+export function buildTopicJsonLd(topic: TopicCluster, articles: InsightPost[]) {
+  const url = absoluteUrl(`/topics/${topic.slug}`);
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${url}#collection`,
+    name: `${topic.name} topic hub`,
+    description: topic.description,
+    url,
+    isPartOf: { "@id": `${siteUrl}/#website` },
+    publisher: { "@id": `${siteUrl}/#organization` },
+    hasPart: articles.map((article) => ({
+      "@type": "BlogPosting",
+      headline: article.title,
+      url: absoluteUrl(`/blog/${article.slug}`),
+    })),
   };
 }

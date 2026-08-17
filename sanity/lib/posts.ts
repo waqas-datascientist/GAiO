@@ -12,6 +12,7 @@ import {
 } from "./queries";
 import { isSanityConfigured } from "../env";
 import type { PublicComment } from "@/lib/comments";
+import { inferTopicSlug, type TopicSlug } from "@/lib/editorial";
 
 export type InsightComment = PublicComment;
 
@@ -24,8 +25,14 @@ export type InsightPost = {
   slug: string;
   excerpt: string;
   author: string;
+  editor: string;
+  topic: TopicSlug;
   category: string;
   readTime: string;
+  keyTakeaways: string[];
+  socialHeadline: string | null;
+  socialSummary: string | null;
+  evidence: EvidenceItem[];
   publishedAt: string | null;
   updatedAt: string | null;
   featured: boolean;
@@ -37,6 +44,17 @@ export type InsightPost = {
   source: "sanity" | "sample";
 };
 
+export type EvidenceItem = {
+  _key?: string;
+  kind: string;
+  finding: string;
+  method?: string | null;
+  sourceName?: string | null;
+  url?: string | null;
+  observedAt?: string | null;
+  limitation?: string | null;
+};
+
 type SanityPostDoc = {
   _id: string;
   _updatedAt?: string | null;
@@ -44,8 +62,14 @@ type SanityPostDoc = {
   slug?: string | null;
   excerpt?: string | null;
   author?: string | null;
+  editor?: string | null;
+  topic?: string | null;
   category?: string | null;
   readTime?: string | null;
+  keyTakeaways?: string[] | null;
+  socialHeadline?: string | null;
+  socialSummary?: string | null;
+  evidence?: EvidenceItem[] | null;
   publishedAt?: string | null;
   featured?: boolean | null;
   likes?: number | null;
@@ -61,9 +85,15 @@ function sampleToInsight(article: Article, index: number): InsightPost {
     title: article.title,
     slug: article.slug,
     excerpt: article.excerpt,
-    author: "Signal / Proof",
+    author: article.author,
+    editor: article.editor,
+    topic: inferTopicSlug({ topic: article.topic }),
     category: article.category,
     readTime: article.readTime,
+    keyTakeaways: article.keyTakeaways,
+    socialHeadline: null,
+    socialSummary: null,
+    evidence: [],
     publishedAt: null,
     updatedAt: null,
     featured: index === 0,
@@ -83,9 +113,15 @@ function mapSanityPost(doc: SanityPostDoc): InsightPost | null {
     title: doc.title,
     slug: doc.slug,
     excerpt: doc.excerpt ?? "",
-    author: doc.author ?? "Signal / Proof",
+    author: doc.author ?? "GAiO Editorial Desk",
+    editor: doc.editor ?? "GAiO Editorial Desk",
+    topic: inferTopicSlug({ topic: doc.topic, title: doc.title, category: doc.category }),
     category: doc.category ?? "Insight",
     readTime: doc.readTime ?? "5 min read",
+    keyTakeaways: Array.isArray(doc.keyTakeaways) ? doc.keyTakeaways.filter(Boolean).slice(0, 5) : [],
+    socialHeadline: doc.socialHeadline ?? null,
+    socialSummary: doc.socialSummary ?? null,
+    evidence: Array.isArray(doc.evidence) ? doc.evidence.filter((item) => item?.finding) : [],
     publishedAt: doc.publishedAt ?? null,
     updatedAt: doc._updatedAt ?? null,
     featured: Boolean(doc.featured),
@@ -168,6 +204,43 @@ export async function getInsightSlugs(): Promise<string[]> {
     if (slugs) return slugs.filter(Boolean);
   }
   return articles.map((a) => a.slug);
+}
+
+export async function getInsightPostsByTopic(topic: TopicSlug): Promise<InsightPost[]> {
+  const posts = await getInsightPosts();
+  return posts.filter((post) => post.topic === topic);
+}
+
+const STOP_WORDS = new Set(["about", "after", "before", "from", "into", "that", "the", "this", "what", "when", "with", "without", "your"]);
+
+function titleTerms(title: string) {
+  return new Set(
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/g, " ")
+      .split(/\s+/)
+      .filter((term) => term.length > 3 && !STOP_WORDS.has(term)),
+  );
+}
+
+export async function getRelatedInsightPosts(post: InsightPost, limit = 3): Promise<InsightPost[]> {
+  const posts = await getInsightPosts();
+  const sourceTerms = titleTerms(post.title);
+
+  return posts
+    .filter((candidate) => candidate.slug !== post.slug)
+    .map((candidate) => {
+      let score = 0;
+      if (candidate.topic === post.topic) score += 8;
+      if (candidate.category === post.category) score += 3;
+      for (const term of titleTerms(candidate.title)) {
+        if (sourceTerms.has(term)) score += 1;
+      }
+      return { candidate, score };
+    })
+    .sort((a, b) => b.score - a.score || a.candidate.title.localeCompare(b.candidate.title))
+    .slice(0, limit)
+    .map(({ candidate }) => candidate);
 }
 
 export async function getCommentsForPost(

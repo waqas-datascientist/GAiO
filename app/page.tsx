@@ -6,8 +6,10 @@ import { TeamCard } from "@/components/team-card";
 import { Marquee } from "@/components/ui/marquee";
 import { AiOverviewProofList } from "@/components/ai-overview-proof";
 import { AuraFeaturedBadge } from "@/components/aura-featured-badge";
+import { NewsletterSignup } from "@/components/newsletter-signup";
 import { CountUp, EngineCloud, HeroGeoMap, Highlighter, KineticText, LineShadowText, MethodFlow, MorphStatement, PixelProof, Text3DFlip, TextReveal } from "@/components/visuals";
 import { blogHref, blogListingHref, faqs, methodSteps, proofs, services, team, testimonials } from "@/lib/content";
+import { topicClusters } from "@/lib/editorial";
 import { getLatestInsightPosts } from "@/sanity/lib/posts";
 
 /** Refresh homepage Insights after Studio publishes. */
@@ -62,7 +64,11 @@ export default async function HomePage() {
 
     <section className="section section-muted"><div className="wrap"><div className="split-head"><div><p className="eyebrow">The people behind the method</p><h2 className="display section-title">Senior specialists. One shared standard of proof.</h2></div><Link className="button button-ghost" href="/about">Meet the team <ArrowRight size={16} /></Link></div><div className="team-grid">{team.map((person) => <TeamCard key={person.name} name={person.name} role={person.role} about={person.about} initials={person.initials} avatarTone={person.avatarTone} email={person.email} imageSrc={person.imageSrc} imagePosition={person.imagePosition} />)}</div></div></section>
 
-    <section className="section"><div className="wrap"><div className="split-head"><div><p className="eyebrow">Insights</p><h2 className="display section-title">Original thinking for the new search surface.</h2></div><Link className="button button-ghost" href={blogListingHref}>See all insights <ArrowRight size={16} /></Link></div><div className="blog-card-grid">{latestInsights.map((post) => <BlogPostCard key={post._id} title={post.title} subtitle={post.author || post.category} href={blogHref(post.slug)} image={post.imageUrl} likes={post.likes} comments={post.comments} views={post.views} />)}</div></div></section>
+    <section className="section"><div className="wrap"><div className="split-head"><div><p className="eyebrow">Topic authority</p><h2 className="display section-title">A connected library, built to compound.</h2></div><div className="topic-system-copy"><p>Every insight belongs to one durable hub, one reader decision, and one next step.</p><Link className="button button-primary" href="/authority-engine">See the GAiO Authority Engine</Link></div></div><div className="topic-mini-grid">{topicClusters.map((topic) => <Link className="topic-mini-card" href={`/topics/${topic.slug}`} key={topic.slug}><span className="meta">{topic.eyebrow}</span><strong>{topic.name}</strong><p>{topic.promise}</p></Link>)}</div></div></section>
+
+    <section className="section section-muted"><div className="wrap"><div className="split-head"><div><p className="eyebrow">Insights</p><h2 className="display section-title">Original thinking with visible ownership and evidence.</h2></div><Link className="button button-ghost" href={blogListingHref}>See all insights <ArrowRight size={16} /></Link></div><div className="blog-card-grid">{latestInsights.map((post) => <BlogPostCard key={post._id} title={post.title} subtitle={`${post.author} · ${post.category}`} href={blogHref(post.slug)} image={post.imageUrl} likes={post.likes} comments={post.comments} views={post.views} />)}</div></div></section>
+
+    <section className="section section-dark"><div className="wrap"><NewsletterSignup source="homepage" /></div></section>
 
     <section className="section"><div className="wrap"><div className="split-head"><div><p className="eyebrow">Questions, answered</p><h2 className="display section-title">GEO should be clear before it becomes complex.</h2></div></div><div className="faq-list">{faqs.map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div></div></section>
     <CTA />

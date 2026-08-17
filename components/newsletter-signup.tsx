@@ -1,0 +1,82 @@
+"use client";
+
+import { FormEvent, useState } from "react";
+import { ArrowRight, Check } from "lucide-react";
+
+type NewsletterSignupProps = {
+  source: string;
+  compact?: boolean;
+};
+
+export function NewsletterSignup({ source, compact = false }: NewsletterSignupProps) {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formElement = event.currentTarget;
+    setStatus("loading");
+    setMessage("");
+
+    const form = new FormData(formElement);
+    let response: Response;
+    try {
+      response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: form.get("email"),
+          company: form.get("company"),
+          source,
+        }),
+      });
+    } catch {
+      setStatus("error");
+      setMessage("We could not reach the signup service. Please try again.");
+      return;
+    }
+
+    const result = (await response.json().catch(() => ({}))) as { error?: string };
+
+    if (!response.ok) {
+      setStatus("error");
+      setMessage(result.error || "We could not save your signup. Please try again.");
+      return;
+    }
+
+    setStatus("success");
+    setMessage("You’re on the list. Watch your inbox for the next Signal Brief.");
+    formElement.reset();
+  }
+
+  return (
+    <section className={`newsletter-panel${compact ? " newsletter-panel-compact" : ""}`} aria-labelledby={`newsletter-${source}`}>
+      <div className="newsletter-copy">
+        <p className="eyebrow">The Signal Brief</p>
+        <h2 className="display newsletter-title" id={`newsletter-${source}`}>One useful AI-search lesson each week.</h2>
+        <p>No daily noise. Get one tested idea, one evidence note, and one practical action for making expertise easier to find and trust.</p>
+      </div>
+      <form className="newsletter-form" onSubmit={submit}>
+        <label className="sr-only" htmlFor={`newsletter-email-${source}`}>Work email</label>
+        <input
+          id={`newsletter-email-${source}`}
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="you@company.com"
+          required
+          disabled={status === "loading" || status === "success"}
+        />
+        <label className="newsletter-honeypot" aria-hidden="true">
+          Company
+          <input name="company" type="text" tabIndex={-1} autoComplete="off" />
+        </label>
+        <button className="button button-signal" type="submit" disabled={status === "loading" || status === "success"}>
+          {status === "success" ? <><Check size={16} /> Subscribed</> : <>Get the brief <ArrowRight size={16} /></>}
+        </button>
+        <p className="newsletter-consent">By subscribing, you agree to receive GAiO Engine editorial email. Unsubscribe any time.</p>
+        {message ? <p className={`newsletter-status is-${status}`} role="status">{message}</p> : null}
+      </form>
+    </section>
+  );
+}

@@ -3,8 +3,12 @@ export type Article = {
   title: string;
   excerpt: string;
   category: string;
+  topic: string;
   readTime: string;
   date: string;
+  author: string;
+  editor: string;
+  keyTakeaways: string[];
   body: string[];
 };
 
@@ -26,6 +30,7 @@ export const navItems = [
   { href: "/services", label: "Services" },
   { href: "/methodology", label: "Method" },
   { href: "/proof", label: "Proof" },
+  { href: "/topics", label: "Topics" },
   { href: blogListingHref, label: "Blog" },
   { href: "/about", label: "About" },
 ];
@@ -166,11 +171,19 @@ export const faqs = [
 export const articles: Article[] = [
   {
     slug: "from-keywords-to-knowledge",
-    title: "From keywords to knowledge: a practical GEO shift",
+    title: "Keywords are not enough: build a knowledge system AI can understand",
     excerpt: "A clear way to move from isolated keyword targeting to evidence-rich, answer-ready content systems.",
     category: "Strategy",
+    topic: "geo-fundamentals",
     readTime: "6 min read",
     date: "Sample insight",
+    author: "Waqas K.",
+    editor: "GAiO Editorial Desk",
+    keyTakeaways: [
+      "Start with the customer decision, not a longer keyword list.",
+      "Connect each claim to a clear entity, source, and accountable owner.",
+      "Measure whether priority answers become clearer and better supported over time.",
+    ],
     body: [
       "Generative search asks a different question of your content: can a system understand the claim, see the supporting evidence, and connect it to a real-world entity?",
       "The answer is not to publish more generic AI content. It is to identify the topics where your expertise is uniquely useful, then make the logic, sources, and ownership around that expertise easier to inspect.",
@@ -179,11 +192,19 @@ export const articles: Article[] = [
   },
   {
     slug: "citation-ready-content",
-    title: "What makes a page citation-ready?",
+    title: "Is your page citation-ready? Start with these evidence checks",
     excerpt: "The structural and editorial choices that help a useful page hold up when a system needs to synthesize an answer.",
     category: "Editorial systems",
+    topic: "citation-ready-content",
     readTime: "5 min read",
     date: "Sample insight",
+    author: "Afnan K.",
+    editor: "GAiO Editorial Desk",
+    keyTakeaways: [
+      "Give the direct answer before the supporting explanation.",
+      "Separate measured facts, expert recommendations, and situation-dependent judgment.",
+      "Show who wrote the page, who reviewed it, and which sources support the non-obvious claims.",
+    ],
     body: [
       "Citation-ready content is not a formatting trick. It combines a direct answer, transparent reasoning, genuinely useful source material, and context about who is making the claim.",
       "The best pages make it easy to separate what is known, what is recommended, and what depends on the reader's situation. That clarity helps people and systems alike.",
@@ -192,11 +213,19 @@ export const articles: Article[] = [
   },
   {
     slug: "measuring-ai-presence",
-    title: "Measuring AI presence without chasing vanity metrics",
+    title: "How to measure AI visibility without chasing vanity metrics",
     excerpt: "How to define a focused visibility review around real questions, evidence patterns, and implementation progress.",
     category: "Measurement",
+    topic: "measurement-experiments",
     readTime: "4 min read",
     date: "Sample insight",
+    author: "Waqas K.",
+    editor: "GAiO Editorial Desk",
+    keyTakeaways: [
+      "Use a small query set tied to real customer decisions.",
+      "Record citations, representation accuracy, source patterns, and assisted conversions together.",
+      "Treat every result as a dated observation, not a permanent rank.",
+    ],
     body: [
       "The most useful GEO measurement starts with the decisions your audience needs to make—not a broad list of prompts that look impressive in a report.",
       "Choose a small, meaningful query set. Record the answer patterns, relevant sources, and the ways your own evidence appears or fails to appear.",

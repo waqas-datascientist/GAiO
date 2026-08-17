@@ -1,7 +1,21 @@
-/** Shared GAiO favicon mark for ImageResponse routes (`app/icon.tsx`, etc.). */
-export function GaioIconMark({ size }: { size: number }) {
-  const label = size <= 32 ? "G" : "GAiO";
-  const fontSize = size <= 16 ? 11 : size <= 32 ? 22 : size <= 48 ? 16 : size <= 192 ? 56 : 150;
+/** Shared favicon mark for ImageResponse routes (`app/icon.tsx`, etc.).
+ * Tiny sizes: "G". Larger icons: short wordmark `siteShortName` ("GAiO") —
+ * full "GAiO Engine" does not fit square favicons.
+ */
+
+import { siteShortName } from "@/lib/site";
+
+type GaioIconMarkProps = {
+  size: number;
+  /** Transparent for tab icons; solid dark fill for apple-touch / maskable. */
+  variant?: "transparent" | "solid";
+};
+
+export function GaioIconMark({ size, variant = "transparent" }: GaioIconMarkProps) {
+  // Match static generator: "G" through 48px, short wordmark above that.
+  const label = size <= 48 ? "G" : siteShortName;
+  const fontSize =
+    size <= 16 ? 14 : size <= 32 ? 28 : size <= 48 ? 36 : size <= 180 ? 54 : size <= 192 ? 58 : 168;
 
   return (
     <div
@@ -11,12 +25,12 @@ export function GaioIconMark({ size }: { size: number }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#000000",
+        background: variant === "solid" ? "#0a0a0a" : "transparent",
         color: "#ffffff",
         fontSize,
         fontWeight: 800,
-        letterSpacing: "-0.06em",
-        fontFamily: 'Arial Narrow, "Helvetica Neue", Arial, sans-serif',
+        letterSpacing: label === "G" ? "-0.04em" : "-0.07em",
+        fontFamily: 'Arial Narrow, Arial, "Helvetica Neue", Helvetica, sans-serif',
         lineHeight: 1,
       }}
     >

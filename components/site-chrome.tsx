@@ -6,12 +6,12 @@ import { useState } from "react";
 import { ShareParticleCard } from "@/components/share-particle-card";
 import { SocialsCard } from "@/components/socials-card";
 import { navItems } from "@/lib/content";
-import { siteEmails } from "@/lib/site";
+import { siteEmails, siteName } from "@/lib/site";
 
 export function Brand() {
   return (
-    <Link className="brand" href="/" aria-label="GAiO home">
-      GAiO
+    <Link className="brand" href="/" aria-label={`${siteName} home`}>
+      {siteName}
     </Link>
   );
 }
@@ -46,6 +46,8 @@ export function SiteFooter() {
         <nav className="footer-links" aria-label="Explore">
           <span className="meta">Explore</span>
           {navItems.map((item) => <Link key={item.href} href={item.href}>{item.label}</Link>)}
+          <Link href="/authority-engine">Authority Engine</Link>
+          <Link href="/authors">Authors & editors</Link>
           <Link href="/assessment">Readiness assessment</Link>
           <a href="/sitemap.xml">Sitemap</a>
           <a href="/llms.txt">llms.txt</a>

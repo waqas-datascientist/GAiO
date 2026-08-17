@@ -18,6 +18,7 @@ import {
   siteUrl,
 } from "@/lib/site";
 import { getInsightPosts, type InsightPost } from "@/sanity/lib/posts";
+import { getTopicCluster, topicClusters } from "@/lib/editorial";
 
 type LinkItem = {
   title: string;
@@ -45,7 +46,7 @@ function corePages(): LinkItem[] {
     {
       title: "Home",
       href: "/",
-      note: "Overview of GAiO's GEO practice, method stages, services, team, and FAQs.",
+      note: "Overview of GAiO Engine's GEO practice, method stages, services, team, and FAQs.",
     },
     {
       title: "Services",
@@ -60,7 +61,17 @@ function corePages(): LinkItem[] {
     {
       title: "Proof",
       href: "/proof",
-      note: "How GAiO frames evidence, source coverage, and measurement without vanity guarantees.",
+      note: "How GAiO Engine frames evidence, source coverage, and measurement without vanity guarantees.",
+    },
+    {
+      title: "Topic hubs",
+      href: "/topics",
+      note: "Connected hubs for GEO fundamentals, citation-ready content, entity authority, and measurement.",
+    },
+    {
+      title: "GAiO Authority Engine",
+      href: "/authority-engine",
+      note: "Plain-language glossary and step-by-step 90-day publication, linking, conversion, and distribution plan.",
     },
     {
       title: "Blog",
@@ -71,6 +82,11 @@ function corePages(): LinkItem[] {
       title: "About",
       href: "/about",
       note: "Agency overview and team (Afnan K., Waqas K.).",
+    },
+    {
+      title: "Authors and editors",
+      href: "/authors",
+      note: "Named contributor profiles and editorial accountability.",
     },
     {
       title: "GEO readiness assessment",
@@ -101,7 +117,7 @@ function contactPages(): LinkItem[] {
     {
       title: "Book a strategy call",
       href: "/book",
-      note: "Request a strategy conversation with the GAiO team.",
+      note: "Request a strategy conversation with the GAiO Engine team.",
     },
     {
       title: "GEO readiness assessment",
@@ -168,7 +184,7 @@ export async function buildLlmsTxt(): Promise<string> {
     `Preferred citation: **${siteName}** / **gaioengine.com** (${siteUrl}).`,
     `Also known as: ${siteAlternateNames.join("; ")}.`,
     "",
-    "GAiO helps organisations improve discoverability and citation readiness across generative answer surfaces (including Google AI Overviews, ChatGPT, Perplexity, Gemini, Claude, and Copilot). The practice builds on search fundamentals and focuses on entity clarity, evidence, structured content, and measurement—without guaranteeing third-party AI outputs.",
+    "GAiO Engine helps organisations improve discoverability and citation readiness across generative answer surfaces (including Google AI Overviews, ChatGPT, Perplexity, Gemini, Claude, and Copilot). The practice builds on search fundamentals and focuses on entity clarity, evidence, structured content, and measurement—without guaranteeing third-party AI outputs.",
     "",
     section("Core pages", corePages()),
     section("Insights", insightLinks(posts)),
@@ -202,14 +218,16 @@ export async function buildLlmsFullTxt(): Promise<string> {
   });
 
   const insightBlocks = posts.map((post) => {
+    const topic = getTopicCluster(post.topic);
     const lines = [
       `### [${post.title}](${absoluteUrl(blogHref(post.slug))})`,
       "",
-      post.excerpt?.trim() || `${post.category} insight from GAiO.`,
+      post.excerpt?.trim() || `${post.category} insight from ${siteName}.`,
       "",
-      `Author: ${post.author}. Category: ${post.category}.`,
+      `Author: ${post.author}. Editor: ${post.editor}. Category: ${post.category}. Topic: ${topic?.name || post.topic}.`,
     ];
     if (post.publishedAt) lines.push(`Published: ${post.publishedAt}.`);
+    if (post.keyTakeaways.length) lines.push(`Key takeaways: ${post.keyTakeaways.join("; ")}.`);
     lines.push("");
     return lines.join("\n");
   });
@@ -222,17 +240,23 @@ export async function buildLlmsFullTxt(): Promise<string> {
     `Canonical site: ${siteUrl}`,
     `Preferred citation: ${siteName} / gaioengine.com`,
     "",
-    "## What GAiO is",
+    "## What GAiO Engine is",
     "",
-    "GAiO (Generative AI Optimization) is a Generative Engine Optimization (GEO) agency. GEO builds on SEO fundamentals but focuses on whether systems can interpret, verify, and include an organisation's expertise in generated answers.",
+    "GAiO Engine (Generative AI Optimization) is a Generative Engine Optimization (GEO) agency. GEO builds on SEO fundamentals but focuses on whether systems can interpret, verify, and include an organisation's expertise in generated answers.",
     "",
-    "GAiO does not sell placement guarantees. No responsible agency can guarantee a third-party system's output. The work builds and measures conditions that improve discoverability and citation readiness.",
+    "GAiO Engine does not sell placement guarantees. No responsible agency can guarantee a third-party system's output. The work builds and measures conditions that improve discoverability and citation readiness.",
     "",
     `Answer surfaces considered in the practice: ${engines.join(", ")}.`,
     "",
     "## Core pages",
     "",
     ...corePages().map(linkLine),
+    "",
+    "## Topic hubs",
+    "",
+    ...topicClusters.map((topic) =>
+      linkLine({ title: topic.name, href: `/topics/${topic.slug}`, note: topic.description }),
+    ),
     "",
     "## Services",
     "",

@@ -1,4 +1,6 @@
 node_modules/
+.npm-cache/
+public/og-optimized*.png
 .next/
 out/
 *.tsbuildinfo
