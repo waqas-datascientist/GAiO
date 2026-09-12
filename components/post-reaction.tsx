@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, useEffectEvent } from "react";
+import { useEffect, useId, useState } from "react";
 import styled from "styled-components";
 import {
   dislikedStorageKey,
@@ -31,20 +31,16 @@ export function PostReaction({
   const [dislikes, setDislikes] = useState(initialDislikes);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const hydrated = useRef(false);
-
-  const hydrateLocal = useEffectEvent(() => {
-    if (hydrated.current) return;
-    hydrated.current = true;
-    const liked = readFlag(likedStorageKey(postId));
-    const disliked = readFlag(dislikedStorageKey(postId));
-    if (liked) setReaction("like");
-    else if (disliked) setReaction("dislike");
-  });
-
   useEffect(() => {
-    hydrateLocal();
-  }, [postId, hydrateLocal]);
+    const timeout = window.setTimeout(() => {
+      const liked = readFlag(likedStorageKey(postId));
+      const disliked = readFlag(dislikedStorageKey(postId));
+      if (liked) setReaction("like");
+      else if (disliked) setReaction("dislike");
+      else setReaction(null);
+    }, 0);
+    return () => window.clearTimeout(timeout);
+  }, [postId]);
 
   if (hidden) return null;
 

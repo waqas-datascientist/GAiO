@@ -7,6 +7,7 @@ import { Marquee } from "@/components/ui/marquee";
 import { AiOverviewProofList } from "@/components/ai-overview-proof";
 import { AuraFeaturedBadge } from "@/components/aura-featured-badge";
 import { NewsletterSignup } from "@/components/newsletter-signup";
+import { VisibilityPreview } from "@/components/visibility-preview";
 import { CountUp, EngineCloud, HeroGeoMap, Highlighter, KineticText, LineShadowText, MethodFlow, MorphStatement, PixelProof, Text3DFlip, TextReveal } from "@/components/visuals";
 import { blogHref, blogListingHref, faqs, methodSteps, proofs, services, team, testimonials } from "@/lib/content";
 import { topicClusters } from "@/lib/editorial";
@@ -24,6 +25,8 @@ export default async function HomePage() {
     <section className="section"><div className="wrap"><div className="split-head"><div><p className="eyebrow">The search shift</p><h2 className="display section-title"><Text3DFlip /></h2></div><p className="lede">The new surface is a generated answer. Your job is not simply to appear—it is to give systems enough clarity and evidence to understand when your expertise belongs in the answer.</p></div><TextReveal>GEO helps translate your knowledge into a system that is direct, corroborated, structurally clear, and ready to be evaluated.</TextReveal></div></section>
 
     <section className="section section-dark"><div className="wrap"><div className="split-head"><div><p className="eyebrow">Engine landscape</p><h2 className="display section-title">One category. Many answer surfaces.</h2></div><p className="lede">We organise the work around the systems your audience actually uses, while keeping the message and evidence consistent across every surface.</p></div><EngineCloud /></div></section>
+
+    <VisibilityPreview />
 
     <section className="section section-muted"><div className="wrap"><div className="section-intro"><p className="eyebrow">Our GEO operating system</p><h2 className="display section-title">A five-stage path from ambiguity to evidence.</h2></div><MethodFlow steps={methodSteps} /><div className="print-signal"><span className="print-bars"><i /><i /><i /><i /></span> Publish → parse → validate</div></div></section>
     <KineticText text="Make your expertise machine-readable" />

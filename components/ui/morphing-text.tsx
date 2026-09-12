@@ -37,12 +37,14 @@ const useMorphingText = (
   const coolTimeRef = useRef(coolTime)
   const isMobileRef = useRef(false)
 
-  morphTimeRef.current = morphTime
-  coolTimeRef.current = coolTime
-
   const text1Ref = useRef<HTMLSpanElement>(null)
   const text2Ref = useRef<HTMLSpanElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    morphTimeRef.current = morphTime
+    coolTimeRef.current = coolTime
+  }, [morphTime, coolTime])
 
   // Sync mobile flag; re-evaluate on resize
   useEffect(() => {

@@ -59,6 +59,11 @@ function corePages(): LinkItem[] {
       note: "Five-stage operating system: Discovery, Architecture, Authority, Validation, Monitoring.",
     },
     {
+      title: "AI Visibility Lab",
+      href: "/visibility-lab",
+      note: "Illustrative workspace connecting priority queries, answer engines, source mix, representation quality, content gaps, and retrieval readiness.",
+    },
+    {
       title: "Proof",
       href: "/proof",
       note: "How GAiO Engine frames evidence, source coverage, and measurement without vanity guarantees.",

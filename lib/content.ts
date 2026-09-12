@@ -29,6 +29,7 @@ export function blogHref(slug: string) {
 export const navItems = [
   { href: "/services", label: "Services" },
   { href: "/methodology", label: "Method" },
+  { href: "/visibility-lab", label: "Visibility Lab" },
   { href: "/proof", label: "Proof" },
   { href: "/topics", label: "Topics" },
   { href: blogListingHref, label: "Blog" },

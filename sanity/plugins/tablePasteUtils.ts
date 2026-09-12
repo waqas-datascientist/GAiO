@@ -344,7 +344,6 @@ export function planTablePasteDistribution(
     children?: Array<{ text?: string }>;
   };
 
-  const firstText = firstBlock.children?.[0]?.text ?? "";
   const lastText = lastBlock.children?.[lastBlock.children.length - 1]?.text ?? "";
 
   return {

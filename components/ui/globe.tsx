@@ -62,8 +62,11 @@ export function Globe({
   const pointerInteractionMovement = useRef(0)
   const reduceMotion = useReducedMotion()
   const reduceMotionRef = useRef(reduceMotion)
-  reduceMotionRef.current = reduceMotion
   const [active, setActive] = useState(false)
+
+  useEffect(() => {
+    reduceMotionRef.current = reduceMotion
+  }, [reduceMotion])
 
   const r = useMotionValue(0)
   const rs = useSpring(r, {
@@ -104,19 +107,18 @@ export function Globe({
   }, [])
 
   useEffect(() => {
-    if (!active || !canvasRef.current) return
+    const canvas = canvasRef.current
+    if (!active || !canvas) return
 
     const onResize = () => {
-      if (canvasRef.current) {
-        widthRef.current = canvasRef.current.offsetWidth
-      }
+      widthRef.current = canvas.offsetWidth
     }
 
     window.addEventListener("resize", onResize)
     onResize()
 
     const tuning = mobileGlobeTuning()
-    const globe = createGlobe(canvasRef.current, {
+    const globe = createGlobe(canvas, {
       ...config,
       ...tuning,
       width: widthRef.current * 2,
@@ -132,14 +134,14 @@ export function Globe({
     })
 
     const fade = window.setTimeout(() => {
-      if (canvasRef.current) canvasRef.current.style.opacity = "1"
+      canvas.style.opacity = "1"
     }, 0)
 
     return () => {
       window.clearTimeout(fade)
       globe.destroy()
       window.removeEventListener("resize", onResize)
-      if (canvasRef.current) canvasRef.current.style.opacity = "0"
+      canvas.style.opacity = "0"
     }
   }, [active, rs, config])
 

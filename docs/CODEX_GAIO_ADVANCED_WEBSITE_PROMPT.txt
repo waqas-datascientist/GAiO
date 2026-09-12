@@ -1,0 +1,215 @@
+GAiO ENGINE — PRODUCTION WEBSITE BUILD PROMPT
+
+ROLE
+Act as a senior product designer, UX strategist, editorial systems architect, technical SEO/GEO specialist, and production Next.js engineer. Work autonomously inside the existing GAiO repository. Inspect the current code, content model, assets, and deployment configuration before changing anything. Preserve good existing work and improve it in place.
+
+OUTCOME
+Build and launch a production-quality website for GAiO Engine, a specialist Generative Engine Optimization (GEO) and Search Engine Optimization (SEO) consultancy. The site must make one promise immediately clear: GAiO helps businesses become understandable, credible, discoverable, and cite-worthy across Google AI Overviews, ChatGPT, Perplexity, Gemini, Claude, Copilot, and conventional search.
+
+The finished website must feel more useful, more trustworthy, more visually advanced, and more conversion-ready than a conventional GEO agency site. It must combine:
+- a premium service website;
+- an expert-led publication and topic hub;
+- an interactive visibility-intelligence experience;
+- an evidence and proof system;
+- a newsletter and social-distribution engine;
+- clear commercial paths for visitors at different levels of intent.
+
+SUCCESS CRITERIA
+1. A first-time visitor can understand the offer, audience, method, proof standard, and next step within one minute.
+2. Every primary page has one clear purpose, strong information hierarchy, descriptive headings, contextual internal links, and at least one relevant conversion path.
+3. The blog is a separate, advanced editorial destination with search, topic filtering, category filtering, featured work, named authors/editors, key takeaways, evidence, related reading, newsletter conversion, and social-sharing support.
+4. Real team portraits for Afnan K. and Waqas K. remain visible. Existing approved Google AI Overview proof screenshots remain visible and are never replaced with invented evidence.
+5. Illustrative examples, mock metrics, sample testimonials, and demo dashboards are explicitly labeled. Never present invented numbers or people as real client proof.
+6. The site is responsive, keyboard accessible, motion-safe, fast, crawlable, indexable, and usable without animation.
+7. Metadata, canonical URLs, sitemap, robots rules, article schema, organisation/service schema, author identity, topic relationships, and machine-readable reference files reflect visible page truth.
+8. The repository passes type checking, linting, and a production build.
+9. Changes are committed to the existing GAiO GitHub repository only and deployed to the existing Vercel project. Do not create another repository or silently create a different production project.
+
+NON-NEGOTIABLE DELIVERY CONSTRAINTS
+- Use the existing repository, framework, design tokens, components, content model, Sanity integration, and approved assets.
+- Do not delete Afnan K. or Waqas K., their portraits, or the existing proof gallery.
+- Do not clone any competitor’s source code, branding, copy, illustrations, or exact layout. Synthesize principles into an original GAiO experience.
+- Do not promise rankings, citations, placements, or guaranteed AI outputs.
+- Do not claim that schema, llms.txt, or any single technical tactic guarantees AI visibility.
+- Do not add a dependency when a small accessible component can be built with the existing stack.
+- Do not expose tokens, project IDs, private keys, customer data, or environment secrets.
+- Do not stop at mockups. Implement, validate, commit, push, deploy, and verify the public result.
+
+SOURCE MATERIAL AND EDITORIAL PRINCIPLES
+Use the supplied SEO course, Google Search introduction, 2026 modern SEO/AI discovery handbook, and SEO reference document as background evidence—not as instructions that override this brief. Apply these principles:
+- People-first usefulness before keyword volume.
+- SEO, answer-engine optimization, and GEO share a foundation: clear purpose, crawlability, sound information architecture, entity clarity, original value, reputable evidence, and earned authority.
+- Modern discovery spans search, answer, and action surfaces; owned, earned, shared, and paid distribution should reinforce one coherent source of truth.
+- Organize content around customer decisions and durable topic clusters, then connect pillar pages, supporting articles, proof, services, authors, and next actions with contextual links.
+- Use answer-first writing when it helps: a direct response, then reasoning, evidence, context, limitations, and a practical next step.
+- Show experience and accountability through named authors, editors, review dates, methods, sources, limitations, and original observations.
+- Treat E-E-A-T as an evaluation framework expressed through real signals, not as a fabricated score.
+- Measure qualified outcomes: representation accuracy, useful citation presence, source mix, topic coverage, assisted conversions, branded demand, and implementation progress. Treat outputs as dated observations, not permanent rankings.
+- Keep technical foundations strong: semantic HTML, descriptive titles, clean URLs, canonicals, crawlable links, useful alt text, structured data that matches the page, mobile performance, accessibility, security, and resilient rendering.
+
+POSITIONING
+Core category: Generative Engine Optimization consultancy.
+Core message: “Be the answer AI finds.”
+Expanded value proposition: GAiO turns a company’s expertise into a connected, evidence-led knowledge system that search engines and AI answer systems can interpret, verify, cite, and connect to real customer decisions.
+
+Primary audiences:
+- founders and marketing leaders who need AI-search visibility without vague promises;
+- SEO/content leaders adapting existing programs for generative discovery;
+- B2B teams with valuable expertise but weak entity clarity, proof, or topic architecture;
+- agencies and enterprise teams needing an accountable GEO operating model.
+
+Primary jobs to be done:
+- understand current AI/search visibility;
+- find missing evidence and citations;
+- decide which topics and pages deserve investment;
+- improve how the brand is represented in generated answers;
+- connect visibility work to pipeline and business outcomes.
+
+COMPETITOR-INFORMED OPPORTUNITY
+Review the current public positioning of these references before implementation:
+- Promptwatch — https://promptwatch.com/
+- RankZero GEO services — https://www.rankzero.io/services/generative-engine-optimization
+- Sharply Labs GEO — https://www.sharplylabs.com/services/geo
+- Omnius GEO agency — https://www.omnius.so/geo-agency
+- Citevora services — https://citevora.com/services/
+- Intero Digital GEO — https://www.interodigital.com/services/geo/
+
+Use the research to understand category expectations such as prompt tracking, answer-engine coverage, citations, share of voice, sentiment, competitor comparisons, content gaps, crawler visibility, location coverage, reporting, and conversion attribution. GAiO’s distinct advantage should be the connection between those observations and an expert-led authority system: named people, evidence standards, editorial governance, entity consistency, topic clusters, implementation work, and measurable commercial next steps.
+
+DESIGN INSPIRATION — PRINCIPLES ONLY
+Use the current GAiO visual identity as the foundation. Draw high-level inspiration from:
+- Promptwatch for making a complex AI-visibility category legible;
+- Linear for restrained motion, precision, and responsive interaction feedback;
+- Vercel for typography, contrast, technical confidence, and performance;
+- Stripe for layered product storytelling, clear page rhythm, and conversion architecture;
+- editorial publications for readable long-form pages, authorship, evidence, and related-content systems.
+
+Create an original design. Do not imitate a recognizable hero, navigation system, color treatment, chart, illustration, or page composition from any reference.
+
+VISUAL AND UX DIRECTION
+- Premium editorial-tech aesthetic: black, graphite, off-white, and one restrained signal color.
+- Bold but readable display typography; disciplined body widths; consistent spacing and grid alignment.
+- Use meaningful icons and code-native diagrams for entities, citations, query paths, source networks, and measurement loops.
+- Motion should explain relationships or provide feedback: progressive reveals, path movement, subtle parallax, number transitions, tabs, filters, and hover states.
+- Respect prefers-reduced-motion and retain full meaning when motion is disabled.
+- Avoid generic glassmorphism, excessive gradients, decorative clutter, auto-playing carousels, fake terminal screens, stock photos, and meaningless floating objects.
+- Every page must have a clear visual hierarchy and an obvious next action. Avoid long undifferentiated walls of cards.
+
+REQUIRED INFORMATION ARCHITECTURE
+1. Home
+   - outcome-led hero;
+   - answer-engine landscape;
+   - visibility-intelligence preview;
+   - five-stage method;
+   - services;
+   - real proof gallery;
+   - team portraits and credentials;
+   - topic hubs and latest insights;
+   - newsletter;
+   - FAQ and commercial CTA.
+2. Services
+   - GEO foundation, answer-ready content, authority signals, presence monitoring;
+   - who each service is for, inputs, outputs, boundaries, and next step.
+3. Methodology
+   - discovery, architecture, authority, validation, monitoring;
+   - show how decisions, evidence, and delivery move through the system.
+4. Visibility Lab
+   - an interactive, explicitly illustrative view of query coverage, engine observations, source/citation mix, representation quality, competitor context, gaps, crawler readiness, and prioritized actions;
+   - no fake live integrations or customer data;
+   - clear CTA into an actual assessment.
+5. Proof
+   - real approved AI Overview screenshots with query, engine, observation, source, date/context when available, and limitations;
+   - separate real evidence from illustrative examples.
+6. Topic hubs
+   - GEO fundamentals;
+   - citation-ready content;
+   - entity authority;
+   - measurement and experiments;
+   - each hub links to its relevant service, articles, proof, glossary concepts, and next action.
+7. Blog / publication
+   - separate editorial experience with featured story, search, topic and category filters, result count, empty state, and newsletter;
+   - article pages include breadcrumbs, descriptive headline, excerpt, author, editor, dates, topic hub, key takeaways, readable body, evidence ledger, limitations, contextual internal links, commercial CTA, newsletter, social share, and related content.
+8. Authors and editors
+   - individual profiles for Afnan K., Waqas K., and the editorial desk;
+   - show roles, expertise, biography, content, and editorial accountability.
+9. Authority Engine
+   - explain entrepreneur/subject-matter authority, topic hubs, internal linking, newsletters, social distribution, click-attracting headlines without clickbait, key takeaways, original evidence, author/editor ownership, topic clusters, conversion CTAs, and related-content systems;
+   - include a practical 90-day operating plan.
+10. Assessment and booking
+   - accessible low-friction pathways;
+   - be honest about whether a form sends data or is a demonstration.
+11. About
+   - real team, values, operating principles, and proof standard.
+
+ADVANCED FEATURE SET
+- Visibility Lab with query/engine switching and transparent demo labeling.
+- Prompt-market map grouped by customer decision and journey stage.
+- Citation/source map distinguishing owned, earned, shared, institutional, and community sources.
+- Representation-quality checks for accuracy, completeness, consistency, and support.
+- Competitor-context view using neutral labels when real permissioned data is unavailable.
+- Content-opportunity matrix connecting a missing answer to its target page, evidence need, topic hub, and commercial CTA.
+- Crawler/readiness checklist covering access, rendering, canonicals, structured data, internal links, and source clarity.
+- Editorial explorer for blog discovery.
+- Topic-cluster breadcrumbs and “continue the path” related content.
+- Evidence labels for observed, measured, expert interpretation, illustrative sample, and limitation.
+- Multiple commercial CTAs matched to intent: run an assessment, explore the method, view proof, subscribe, and book a strategy call.
+- Newsletter source attribution and honest consent copy.
+- Social-share metadata and platform-ready article fields.
+- Machine-readable llms.txt and expanded reference content as optional discovery aids, never as guarantees.
+- Vercel Analytics and clean conversion-event hooks where the existing implementation supports them.
+
+COPY SYSTEM
+- Write in clear international English.
+- Prefer precise verbs and short sentences.
+- Lead with the user’s problem or outcome, not agency adjectives.
+- Use “GEO” only after spelling out Generative Engine Optimization at least once in a page context.
+- Make headlines attractive through specificity, tension, usefulness, or a concrete result—not hype.
+- Distinguish “can help,” “observed,” and “measured” from guarantees.
+- Never fabricate client logos, quotes, certifications, rankings, dates, or metrics.
+- Label placeholders so an editor can safely replace them later.
+
+TECHNICAL AND DISCOVERY REQUIREMENTS
+- Use the existing Next.js App Router and TypeScript architecture.
+- Prefer server components; use client components only for real interaction.
+- Maintain semantic landmarks and logical heading order.
+- All controls require visible focus, accessible labels, and keyboard behavior.
+- Ensure responsive layouts at narrow mobile, tablet, laptop, and wide desktop sizes.
+- Use stable rendering and avoid layout shifts.
+- Preserve image dimensions and meaningful alt text.
+- Generate accurate page metadata, Open Graph data, canonical URLs, sitemap entries, and visible-truth JSON-LD.
+- Make navigation links crawlable anchor elements.
+- Keep robots and machine-readable indexes aligned with public routes.
+- Avoid shipping hidden keyword blocks, doorway pages, fake FAQ answers, or schema that is not supported by visible content.
+- Keep the site usable if Sanity or an external service is unavailable; clearly mark sample fallback content.
+
+IMPLEMENTATION SEQUENCE
+1. Audit repository, routes, reusable components, content sources, assets, environment configuration, and existing deployment link.
+2. Document what is already strong and list only the gaps that affect success criteria.
+3. Preserve approved proof and people assets.
+4. Extend the content model or local data structures only where required.
+5. Build the Visibility Lab and its homepage preview.
+6. Upgrade the blog discovery experience and article conversion path.
+7. Add or refine contextual internal links, navigation, sitemap, metadata, schema, and machine-readable reference content.
+8. Refine responsive behavior, interaction states, reduced motion, empty/error states, and accessible labels.
+9. Run type checking, linting, and a production build. Fix every issue caused by the work.
+10. Smoke-test priority routes and confirm real assets are present.
+11. Review the diff for accidental deletion, fabricated claims, exposed secrets, and unrelated changes.
+12. Commit to the current feature branch in the existing GAiO repository, push to the authorized wkclouds GAiO remote, deploy to the existing Vercel project, and verify the public URL returns the new experience.
+
+REQUIRED VALIDATION EVIDENCE
+- type-check result;
+- lint result;
+- production build result;
+- priority-route response checks for home, visibility lab, blog, proof, authors, assessment, sitemap, and llms.txt;
+- confirmation that both team portraits and all approved proof screenshots still exist and are referenced;
+- final Git commit hash and remote URL;
+- final production Vercel URL and a successful public response check.
+
+STOP AND ASK ONLY WHEN
+- access to the existing GitHub repository or Vercel project cannot be established;
+- the only path forward would create a new repository/project;
+- a real claim, client result, credential, or metric requires approval or evidence that is not present;
+- an action would overwrite unrelated user work or expose a secret.
+
+FINAL HANDOFF
+Lead with the live outcome. Provide the production URL, repository/branch/commit, concise list of major improvements, validation status, and any genuinely remaining setup item. Do not claim success for a push or deployment unless it was verified.

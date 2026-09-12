@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useEffectEvent } from "react";
+import { useEffect, useState } from "react";
 import {
   readSessionFlag,
   viewedStorageKey,
@@ -25,27 +25,31 @@ export function PostViews({
 }: PostViewsProps) {
   const [views, setViews] = useState(initialViews);
 
-  const recordView = useEffectEvent(async () => {
-    if (!persist) return;
-    const key = viewedStorageKey(postId);
-    if (readSessionFlag(key)) return;
-    writeSessionFlag(key, true);
-
-    try {
-      const res = await fetch(`/api/posts/${encodeURIComponent(postId)}/view`, {
-        method: "POST",
-      });
-      if (!res.ok) return;
-      const data = (await res.json()) as { views?: number };
-      if (typeof data.views === "number") setViews(data.views);
-    } catch {
-      /* silent — display still shows SSR count */
-    }
-  });
-
   useEffect(() => {
-    void recordView();
-  }, [postId, recordView]);
+    if (!persist) return;
+    let cancelled = false;
+    const timeout = window.setTimeout(async () => {
+      const key = viewedStorageKey(postId);
+      if (readSessionFlag(key)) return;
+      writeSessionFlag(key, true);
+
+      try {
+        const res = await fetch(`/api/posts/${encodeURIComponent(postId)}/view`, {
+          method: "POST",
+        });
+        if (!res.ok || cancelled) return;
+        const data = (await res.json()) as { views?: number };
+        if (!cancelled && typeof data.views === "number") setViews(data.views);
+      } catch {
+        /* silent — display still shows SSR count */
+      }
+    }, 0);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeout);
+    };
+  }, [persist, postId]);
 
   return (
     <p className="meta post-stat-line" aria-live="polite">

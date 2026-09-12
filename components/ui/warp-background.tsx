@@ -27,9 +27,10 @@ const Beam = ({
   delay: number
   duration: number
 }) => {
-  // Monochrome beams to match Signal/Proof branding (vs Magic UI rainbow defaults)
-  const lightness = Math.floor(Math.random() * 40) + 55
-  const ar = Math.floor(Math.random() * 10) + 1
+  // Stable monochrome beam values keep server/client rendering deterministic.
+  const seed = Math.abs(Math.round(Number(x) * 13 + delay * 17))
+  const lightness = 55 + (seed % 40)
+  const ar = 1 + (seed % 10)
 
   return (
     <motion.div
@@ -73,7 +74,8 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
 
     for (let i = 0; i < beamsPerSide; i++) {
       const x = Math.floor(i * step)
-      const delay = Math.random() * (beamDelayMax - beamDelayMin) + beamDelayMin
+      const phase = ((i + 1) * 0.61803398875) % 1
+      const delay = phase * (beamDelayMax - beamDelayMin) + beamDelayMin
       beams.push({ x, delay })
     }
     return beams

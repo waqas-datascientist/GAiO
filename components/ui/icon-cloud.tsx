@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { Pause, Play } from "lucide-react"
 import { renderToString } from "react-dom/server"
 
@@ -31,9 +31,32 @@ export function IconCloud({
   showControl = true,
 }: IconCloudProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [iconPositions, setIconPositions] = useState<Icon[]>([])
+  const iconPositions = useMemo(() => {
+    const items = icons ?? images ?? []
+    const newIcons: Icon[] = []
+    const numIcons = items.length || 20
+    const offset = 2 / numIcons
+    const increment = Math.PI * (3 - Math.sqrt(5))
+
+    for (let i = 0; i < numIcons; i++) {
+      const y = i * offset - 1 + offset / 2
+      const r = Math.sqrt(1 - y * y)
+      const phi = i * increment
+      newIcons.push({
+        x: Math.cos(phi) * r * 120,
+        y: y * 120,
+        z: Math.sin(phi) * r * 120,
+        scale: 1,
+        opacity: 1,
+        id: i,
+      })
+    }
+    return newIcons
+  }, [icons, images])
   const [isDragging, setIsDragging] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
+  const [isPaused, setIsPaused] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  )
   const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 })
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [targetRotation, setTargetRotation] = useState<{
@@ -56,10 +79,6 @@ export function IconCloud({
   // Pause animation if user prefers reduced motion
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
-    if (mediaQuery.matches) {
-      setIsPaused(true)
-    }
-
     const handleChange = (e: MediaQueryListEvent) => {
       setIsPaused(e.matches)
     }
@@ -141,36 +160,6 @@ export function IconCloud({
     })
 
     iconCanvasesRef.current = newIconCanvases
-  }, [icons, images])
-
-  // Generate initial icon positions on a sphere
-  useEffect(() => {
-    const items = icons ?? images ?? []
-    const newIcons: Icon[] = []
-    const numIcons = items.length || 20
-
-    // Fibonacci sphere parameters
-    const offset = 2 / numIcons
-    const increment = Math.PI * (3 - Math.sqrt(5))
-
-    for (let i = 0; i < numIcons; i++) {
-      const y = i * offset - 1 + offset / 2
-      const r = Math.sqrt(1 - y * y)
-      const phi = i * increment
-
-      const x = Math.cos(phi) * r
-      const z = Math.sin(phi) * r
-
-      newIcons.push({
-        x: x * 120,
-        y: y * 120,
-        z: z * 120,
-        scale: 1,
-        opacity: 1,
-        id: i,
-      })
-    }
-    setIconPositions(newIcons)
   }, [icons, images])
 
   // Handle mouse events

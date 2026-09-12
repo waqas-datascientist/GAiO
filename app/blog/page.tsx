@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { LayoutFrame, PageHero } from "@/components/page-elements";
-import { BlogPostCard } from "@/components/blog-post-card";
+import { BlogExplorer } from "@/components/blog-explorer";
 import { NewsletterSignup } from "@/components/newsletter-signup";
-import { blogHref } from "@/lib/content";
 import { topicClusters } from "@/lib/editorial";
 import { getInsightPosts } from "@/sanity/lib/posts";
 
@@ -46,26 +45,7 @@ export default async function BlogPage() {
         </div>
       </section>
       <section className="section">
-        <div className="wrap">
-          <div className="section-intro blog-listing-intro">
-            <p className="eyebrow">Latest insights</p>
-            <h2 className="display section-title">New thinking, with a visible evidence trail.</h2>
-          </div>
-          <div className="blog-card-grid">
-            {posts.map((post) => (
-              <BlogPostCard
-                key={post._id}
-                title={post.title}
-                subtitle={`${post.author} · ${post.category}`}
-                href={blogHref(post.slug)}
-                image={post.imageUrl}
-                likes={post.likes}
-                comments={post.comments}
-                views={post.views}
-              />
-            ))}
-          </div>
-        </div>
+        <div className="wrap"><BlogExplorer posts={posts} /></div>
       </section>
       <section className="section section-dark">
         <div className="wrap"><NewsletterSignup source="blog-index" /></div>
