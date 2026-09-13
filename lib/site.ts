@@ -16,10 +16,10 @@ export const siteAlternateNames = [
 ] as const;
 
 export const siteTagline =
-  "A practical GEO partner for organisations that want their expertise to be understood, evidenced, and discoverable in generative search.";
+  "We help businesses become the sources Google and AI answer engines can find, understand, trust, cite, and recommend.";
 
 export const siteDescription =
-  "GAiO Engine (Generative AI Optimization) is a Generative Engine Optimization (GEO) agency that helps businesses become clearer, more credible, and more discoverable across generative search and Google's AI-powered results.";
+  "GAiO Engine is an AI Search Visibility and Generative Engine Optimization (GEO) agency helping businesses improve retrievability, entity clarity, citation readiness, and measurable discovery across Google and AI answer engines.";
 
 /** Public company inboxes — not team personal addresses. */
 export const siteEmails = {

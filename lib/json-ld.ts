@@ -1,4 +1,4 @@
-import { team } from "@/lib/content";
+import { services, team } from "@/lib/content";
 import {
   absoluteUrl,
   siteAlternateNames,
@@ -72,8 +72,8 @@ export function buildSiteJsonLd() {
       {
         "@type": "ProfessionalService",
         "@id": serviceId,
-        name: `${siteName} — Generative Engine Optimization`,
-        alternateName: "GEO agency",
+        name: `${siteName} — AI Search Visibility & GEO Agency`,
+        alternateName: ["GEO agency", "AI search visibility agency"],
         url: siteUrl,
         description: siteDescription,
         serviceType: [
@@ -87,48 +87,15 @@ export function buildSiteJsonLd() {
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: `${siteName} GEO services`,
-          itemListElement: [
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "GEO foundation",
-                description:
-                  "Map how a business, entities, offers, and expertise are understood by search and generative systems.",
-                url: absoluteUrl("/services"),
-              },
+          itemListElement: services.map((service) => ({
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: service.title,
+              description: service.copy,
+              url: absoluteUrl(`/services/${service.slug}`),
             },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Answer-ready content",
-                description:
-                  "Restructure priority pages so claims, evidence, and context can be interpreted and cited.",
-                url: absoluteUrl("/services"),
-              },
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Authority signals",
-                description:
-                  "Strengthen corroboration so important facts are easier to verify across the open web.",
-                url: absoluteUrl("/services"),
-              },
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Presence monitoring",
-                description:
-                  "Define prompts, topics, and evidence patterns—then review visibility as AI search changes.",
-                url: absoluteUrl("/services"),
-              },
-            },
-          ],
+          })),
         },
       },
     ],

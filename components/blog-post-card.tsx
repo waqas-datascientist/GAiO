@@ -27,9 +27,11 @@ export function BlogPostCard({
   comments = 0,
   views = 0,
 }: BlogPostCardProps) {
+  const hasVerifiedStats = likes > 0 || comments > 0 || views > 0;
+
   return (
     <StyledWrapper>
-      <article className="main">
+      <article className={`main${hasVerifiedStats ? "" : " no-stats"}`}>
         <div className="card-stage">
           <div className="card_back" aria-hidden="true" />
           <Link className="card-link" href={href} aria-label={`Read ${title}`}>
@@ -65,7 +67,7 @@ export function BlogPostCard({
           </div>
         </div>
 
-        <div className="btns">
+        {hasVerifiedStats ? <div className="btns">
           <div className="stat likes" aria-label={`${likes} likes`}>
             <svg className="stat_svg" viewBox="-2 0 105 92" aria-hidden="true">
               <path d="M85.24 2.67C72.29-3.08 55.75 2.67 50 14.9 44.25 2 27-3.8 14.76 2.67 1.1 9.14-5.37 25 5.42 44.38 13.33 58 27 68.11 50 86.81 73.73 68.11 87.39 58 94.58 44.38c10.79-18.7 4.32-35.24-9.34-41.71Z" />
@@ -84,7 +86,7 @@ export function BlogPostCard({
             </svg>
             <span className="stat_text">{formatCount(views)}</span>
           </div>
-        </div>
+        </div> : null}
       </article>
     </StyledWrapper>
   );
@@ -109,6 +111,10 @@ const StyledWrapper = styled.div`
     min-height: 0;
     padding: var(--pad);
     isolation: isolate;
+  }
+
+  .main.no-stats {
+    grid-template-rows: auto var(--meta-h);
   }
 
   .card-stage {

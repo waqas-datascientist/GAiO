@@ -1,8 +1,7 @@
 import { AiOverviewProofList } from "@/components/ai-overview-proof";
 import { AuraFeaturedBadge } from "@/components/aura-featured-badge";
 import { LayoutFrame, PageHero, CTA } from "@/components/page-elements";
-import { CountUp, Highlighter, PixelProof } from "@/components/visuals";
-import { proofs } from "@/lib/content";
+import { CountUp, PixelProof } from "@/components/visuals";
 
 export const metadata = { title: "Proof and Reporting" };
 
@@ -38,34 +37,11 @@ export default function ProofPage() {
             <p className="eyebrow">Citation readiness</p>
             <h2 className="display section-title">When evidence surfaces in generative search.</h2>
             <p className="lede">
-              Approved proofs from live Google AI Overviews—distinct from the illustrative sample scenarios below.
+              Dated captures from live Google AI Overviews, shown with the original query, source context, and limitations.
             </p>
           </div>
           <AiOverviewProofList variant="evidence" />
           <AuraFeaturedBadge className="aura-featured-inline" tone="light" />
-        </div>
-      </section>
-      <section className="section">
-        <div className="wrap">
-          <div className="section-intro">
-            <p className="eyebrow">Illustrative scenarios</p>
-            <h2 className="display section-title">Sample query-to-source patterns.</h2>
-          </div>
-          <div className="card-grid">
-            {proofs.map((proof) => (
-              <article className="article-card" key={proof.company}>
-                <span className="sample-label">Sample scenario</span>
-                <h3>{proof.query}</h3>
-                <p>
-                  <Highlighter action="highlight" color="#e1e1e1" animationDuration={600} isView>
-                    Source concept:
-                  </Highlighter>{" "}
-                  {proof.source}
-                </p>
-                <p>{proof.note}</p>
-              </article>
-            ))}
-          </div>
         </div>
       </section>
       <CTA />

@@ -116,6 +116,7 @@ export default async function BlogDetailPage({ params }: Props) {
             <div className="prose">
               <KeyTakeaways items={post.keyTakeaways} />
               <PostBody value={post.body} />
+              <div className="article-mid-newsletter"><NewsletterSignup source="article-mid" compact /></div>
               <CommercialArticleCTA topic={post.topic} />
             </div>
             <aside className="reading-rail">

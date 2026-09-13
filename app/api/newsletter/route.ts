@@ -39,21 +39,28 @@ export async function POST(request: Request) {
   const now = new Date().toISOString();
   const id = `newsletter-${createHash("sha256").update(email).digest("hex")}`;
 
-  await client.createIfNotExists({
-    _id: id,
-    _type: "newsletterSubscriber",
-    email,
-    source,
-    status: "subscribed",
-    consentedAt: now,
-    lastSubscribedAt: now,
-  });
+  try {
+    await client.createIfNotExists({
+      _id: id,
+      _type: "newsletterSubscriber",
+      email,
+      source,
+      status: "subscribed",
+      consentedAt: now,
+      lastSubscribedAt: now,
+    });
 
-  await client
-    .patch(id)
-    .set({ email, source, status: "subscribed", lastSubscribedAt: now })
-    .setIfMissing({ consentedAt: now })
-    .commit();
+    await client
+      .patch(id)
+      .set({ email, source, status: "subscribed", lastSubscribedAt: now })
+      .setIfMissing({ consentedAt: now })
+      .commit();
+  } catch {
+    return NextResponse.json(
+      { error: "We could not save your signup. Please try again soon." },
+      { status: 503 },
+    );
+  }
 
   return NextResponse.json({ subscribed: true }, { status: 201 });
 }

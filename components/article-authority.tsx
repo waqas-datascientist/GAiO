@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, ExternalLink, Mail } from "lucide-react";
+import { CopyLinkButton } from "@/components/copy-link-button";
 import { getEditorialProfile, getTopicCluster } from "@/lib/editorial";
 import type { EvidenceItem } from "@/sanity/lib/posts";
 
@@ -101,7 +102,7 @@ export function CommercialArticleCTA({ topic }: { topic: string }) {
         <p>GAiO’s assessment turns your priority topics, current pages, and proof into a staged implementation plan.</p>
       </div>
       <div className="article-commercial-actions">
-        <Link className="button button-signal" href="/assessment">Run the assessment <ArrowRight size={16} /></Link>
+        <Link className="button button-signal" href="/assessment" data-event="article_to_service_conversion" data-location="article_cta">Run the assessment <ArrowRight size={16} /></Link>
         <Link className="button button-ghost" href={cluster ? `/topics/${cluster.slug}` : "/topics"}>
           Explore the topic hub
         </Link>
@@ -111,7 +112,13 @@ export function CommercialArticleCTA({ topic }: { topic: string }) {
 }
 
 export function ArticleShare({ url, title }: { url: string; title: string }) {
-  const encodedUrl = encodeURIComponent(url);
+  const campaignUrl = (source: string) => {
+    const tracked = new URL(url);
+    tracked.searchParams.set("utm_source", source);
+    tracked.searchParams.set("utm_medium", "social");
+    tracked.searchParams.set("utm_campaign", "answer_signal");
+    return encodeURIComponent(tracked.toString());
+  };
   const encodedTitle = encodeURIComponent(title);
   return (
     <section className="article-share" aria-label="Share this article">
@@ -120,10 +127,11 @@ export function ArticleShare({ url, title }: { url: string; title: string }) {
         <p>Share the useful idea—not just the link.</p>
       </div>
       <div className="article-share-links">
-        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`} target="_blank" rel="noreferrer noopener" aria-label="Share on LinkedIn">LinkedIn</a>
-        <a href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`} target="_blank" rel="noreferrer noopener" aria-label="Share on X">X</a>
-        <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`} target="_blank" rel="noreferrer noopener" aria-label="Share on Facebook">Facebook</a>
-        <a href={`mailto:?subject=${encodedTitle}&body=${encodedUrl}`} aria-label="Share by email"><Mail size={17} /> Email</a>
+        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${campaignUrl("linkedin")}`} target="_blank" rel="noreferrer noopener" aria-label="Share on LinkedIn" data-event="outbound_social_share" data-location="linkedin">LinkedIn</a>
+        <a href={`https://twitter.com/intent/tweet?url=${campaignUrl("x")}&text=${encodedTitle}`} target="_blank" rel="noreferrer noopener" aria-label="Share on X" data-event="outbound_social_share" data-location="x">X</a>
+        <a href={`https://www.facebook.com/sharer/sharer.php?u=${campaignUrl("facebook")}`} target="_blank" rel="noreferrer noopener" aria-label="Share on Facebook" data-event="outbound_social_share" data-location="facebook">Facebook</a>
+        <a href={`mailto:?subject=${encodedTitle}&body=${campaignUrl("email")}`} aria-label="Share by email" data-event="outbound_social_share" data-location="email"><Mail size={17} /> Email</a>
+        <CopyLinkButton url={url} />
       </div>
     </section>
   );

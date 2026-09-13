@@ -106,7 +106,8 @@ export function TeamCard({
               className="avatar-img"
               src={imageSrc}
               alt={`${name} portrait`}
-              fill
+              width={280}
+              height={280}
               sizes="280px"
             />
           ) : (

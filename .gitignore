@@ -1,5 +1,8 @@
 node_modules/
 .npm-cache/
+.gh-config/
+.vercel/
+.vercel-user/
 public/og-optimized*.png
 .next/
 out/
@@ -7,3 +10,6 @@ out/
 .env*
 .cursor*
 .cursor/
+
+.vercel
+.env*

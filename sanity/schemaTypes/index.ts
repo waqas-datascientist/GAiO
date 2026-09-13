@@ -1,4 +1,5 @@
 import type { SchemaTypeDefinition } from "sanity";
+import { assessmentLeadType } from "./assessmentLead";
 import { calloutType } from "./callout";
 import { commentType } from "./comment";
 import { horizontalRuleType } from "./horizontalRule";
@@ -9,6 +10,7 @@ import { tableType } from "./table";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   postType,
+  assessmentLeadType,
   newsletterSubscriberType,
   commentType,
   tableType,

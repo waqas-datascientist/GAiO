@@ -6,7 +6,7 @@ import { Globe } from "@/components/ui/globe";
 import { siteEmails } from "@/lib/site";
 
 export function LayoutFrame({ children }: { children: ReactNode }) {
-  return <div className="site-shell"><SiteHeader /><main>{children}</main><SiteFooter /></div>;
+  return <div className="site-shell"><a className="skip-link" href="#main-content">Skip to content</a><SiteHeader /><main id="main-content">{children}</main><SiteFooter /></div>;
 }
 
 export function PageHero({ eyebrow, title, copy, action = true }: { eyebrow: string; title: string; copy: string; action?: boolean }) {
@@ -17,7 +17,7 @@ export function PageHero({ eyebrow, title, copy, action = true }: { eyebrow: str
         <h1 className="display headline">{title}</h1>
         <p className="lede">{copy}</p>
         {action && (
-          <Link className="button button-signal" href="/assessment">
+          <Link className="button button-signal" href="/assessment" data-event="audit_started" data-location="page_hero">
             Start your GEO assessment <ArrowRight size={16} />
           </Link>
         )}
@@ -35,13 +35,14 @@ export function CTA() {
             <Globe className="cta-globe-visual" />
           </div>
           <div className="cta-copy">
-            <p className="eyebrow">The next useful question</p>
-            <h2 className="display section-title">What should AI search understand about you first?</h2>
-            <p className="lede">Start with a focused assessment. We will turn your current site, priorities, and proof into a practical GEO starting point.</p>
+            <p className="eyebrow">Your first visibility decision</p>
+            <h2 className="display section-title">Find out what AI understands about your business.</h2>
+            <p className="lede">Start with a focused audit of your website, market questions, competitors, entities, and proof. We will turn the findings into a practical GEO starting point.</p>
             <div className="hero-actions">
-              <Link className="button button-signal" href="/assessment">Start the assessment <ArrowRight size={16} /></Link>
-              <Link className="button button-ghost" href="/book">Book a strategy call</Link>
+              <Link className="button button-signal" href="/assessment" data-event="audit_started" data-location="final_cta">Run your free AI visibility audit <ArrowRight size={16} /></Link>
+              <Link className="button button-ghost" href="/book" data-event="strategy_call_clicked" data-location="final_cta">Book a strategy call</Link>
             </div>
+            <p className="cta-disclaimer">No placement guarantees. Every finding is reported as a dated observation with clear limitations.</p>
             <p className="cta-contact">
               Or email{" "}
               <a href={`mailto:${siteEmails.connect}`} aria-label={`Connect at ${siteEmails.connect}`}>{siteEmails.connect}</a>

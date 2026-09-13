@@ -95,15 +95,22 @@ export function AiOverviewProof({
           <span>{proof.queryLabel}</span>
         </div>
 
+        <dl className="ai-overview-proof-facts">
+          <div><dt>Platform</dt><dd>{proof.engine}</dd></div>
+          <div><dt>Observed</dt><dd>{proof.observedAt}</dd></div>
+          <div><dt>Region</dt><dd>{proof.region}</dd></div>
+          <div><dt>Result</dt><dd>GAiO Engine appeared as a cited source.</dd></div>
+        </dl>
+
         <Link className="ai-overview-proof-link" href={blogLink}>
-          {hasArticle ? "Read the cited article" : "Browse insights"}
+          {hasArticle ? "Open the cited page" : "Browse insights"}
           <ArrowUpRight size={15} aria-hidden="true" />
         </Link>
       </div>
 
       <figure className="ai-overview-proof-visual">
         <div className="ai-overview-proof-frame" aria-hidden="true" />
-        <div className="ai-overview-proof-screen">
+        <a className="ai-overview-proof-screen" href={proof.imageSrc} target="_blank" rel="noreferrer" data-event="proof_screenshot_opened" data-location={proof.id} aria-label={`Open full-size evidence for ${proof.queryLabel}`}>
           <Image
             src={proof.imageSrc}
             alt={`${proof.engine} result citing ${proof.sourceName} for a query about ${proof.imageAltTopic}.`}
@@ -114,11 +121,11 @@ export function AiOverviewProof({
             style={{ objectPosition: proof.imageObjectPosition ?? "top center" }}
             priority={isFeatured && index === 0}
           />
-        </div>
+        </a>
         <figcaption className="ai-overview-proof-caption">
-          Screenshot from Google Search
+          Captured evidence from Google Search
           <br />
-          AI&nbsp;Overviews vary by query, region, and time.
+          One observation only. AI&nbsp;Overviews vary by query, region, account, and time.
         </figcaption>
       </figure>
     </motion.article>

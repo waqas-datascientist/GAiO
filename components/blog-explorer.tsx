@@ -13,7 +13,7 @@ type BlogExplorerProps = {
 };
 
 function displayDate(value: string | null) {
-  if (!value) return "Sample insight";
+  if (!value) return "Date pending";
   return new Intl.DateTimeFormat("en", {
     day: "numeric",
     month: "short",
@@ -25,9 +25,14 @@ export function BlogExplorer({ posts }: BlogExplorerProps) {
   const [query, setQuery] = useState("");
   const [topic, setTopic] = useState("all");
   const [category, setCategory] = useState("all");
+  const [author, setAuthor] = useState("all");
 
   const categories = useMemo(
     () => Array.from(new Set(posts.map((post) => post.category))).sort(),
+    [posts],
+  );
+  const authors = useMemo(
+    () => Array.from(new Set(posts.map((post) => post.author))).sort(),
     [posts],
   );
 
@@ -42,17 +47,19 @@ export function BlogExplorer({ posts }: BlogExplorerProps) {
           .includes(needle);
       const matchesTopic = topic === "all" || post.topic === topic;
       const matchesCategory = category === "all" || post.category === category;
-      return matchesQuery && matchesTopic && matchesCategory;
+      const matchesAuthor = author === "all" || post.author === author;
+      return matchesQuery && matchesTopic && matchesCategory && matchesAuthor;
     });
-  }, [category, posts, query, topic]);
+  }, [author, category, posts, query, topic]);
 
   const featured = posts.find((post) => post.featured) ?? posts[0];
-  const hasFilters = Boolean(query || topic !== "all" || category !== "all");
+  const hasFilters = Boolean(query || topic !== "all" || category !== "all" || author !== "all");
 
   function clearFilters() {
     setQuery("");
     setTopic("all");
     setCategory("all");
+    setAuthor("all");
   }
 
   return (
@@ -110,6 +117,15 @@ export function BlogExplorer({ posts }: BlogExplorerProps) {
               <option value="all">All topic hubs</option>
               {topicClusters.map((item) => (
                 <option value={item.slug} key={item.slug}>{item.name}</option>
+              ))}
+            </select>
+          </label>
+          <label className="blog-select-field">
+            <span className="sr-only">Filter by author</span>
+            <select value={author} onChange={(event) => setAuthor(event.target.value)}>
+              <option value="all">All authors</option>
+              {authors.map((item) => (
+                <option value={item} key={item}>{item}</option>
               ))}
             </select>
           </label>

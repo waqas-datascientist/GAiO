@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
+import { track } from "@vercel/analytics";
 
 type NewsletterSignupProps = {
   source: string;
@@ -45,16 +46,17 @@ export function NewsletterSignup({ source, compact = false }: NewsletterSignupPr
     }
 
     setStatus("success");
-    setMessage("You’re on the list. Watch your inbox for the next Signal Brief.");
+    track("newsletter_subscribed", { source });
+    setMessage("You’re on the list. Watch your inbox for the next Answer Signal.");
     formElement.reset();
   }
 
   return (
     <section className={`newsletter-panel${compact ? " newsletter-panel-compact" : ""}`} aria-labelledby={`newsletter-${source}`}>
       <div className="newsletter-copy">
-        <p className="eyebrow">The Signal Brief</p>
-        <h2 className="display newsletter-title" id={`newsletter-${source}`}>One useful AI-search lesson each week.</h2>
-        <p>No daily noise. Get one tested idea, one evidence note, and one practical action for making expertise easier to find and trust.</p>
+        <p className="eyebrow">The Answer Signal by GAiO Engine</p>
+        <h2 className="display newsletter-title" id={`newsletter-${source}`}>Practical research on how businesses get found, cited, and recommended.</h2>
+        <p>One concise edition each week: a tested idea, an evidence note, and a practical action for Google and AI-powered discovery.</p>
       </div>
       <form className="newsletter-form" onSubmit={submit}>
         <label className="sr-only" htmlFor={`newsletter-email-${source}`}>Work email</label>
@@ -72,7 +74,7 @@ export function NewsletterSignup({ source, compact = false }: NewsletterSignupPr
           <input name="company" type="text" tabIndex={-1} autoComplete="off" />
         </label>
         <button className="button button-signal" type="submit" disabled={status === "loading" || status === "success"}>
-          {status === "success" ? <><Check size={16} /> Subscribed</> : <>Get the brief <ArrowRight size={16} /></>}
+          {status === "success" ? <><Check size={16} /> Subscribed</> : <>Get The Answer Signal <ArrowRight size={16} /></>}
         </button>
         <p className="newsletter-consent">By subscribing, you agree to receive GAiO Engine editorial email. Unsubscribe any time.</p>
         {message ? <p className={`newsletter-status is-${status}`} role="status">{message}</p> : null}

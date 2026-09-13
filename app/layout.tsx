@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import { AnalyticsEvents } from "@/components/analytics-events";
 import { StyledComponentsRegistry } from "@/components/styled-components-registry";
 import { buildSiteJsonLd } from "@/lib/json-ld";
 import { siteName, siteTagline, siteUrl } from "@/lib/site";
@@ -8,21 +9,21 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} — Generative AI Optimization`,
+    default: `${siteName} | AI Search Visibility & Generative Engine Optimization`,
     template: `%s | ${siteName}`,
   },
   description: siteTagline,
   openGraph: {
     type: "website",
     siteName,
-    title: `${siteName} — Generative AI Optimization`,
+    title: `${siteName} | AI Search Visibility & Generative Engine Optimization`,
     description: siteTagline,
     url: siteUrl,
     images: [{ url: `${siteUrl}/og.png`, alt: "GAiO Authority Engine — build authority that compounds" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteName} — Generative AI Optimization`,
+    title: `${siteName} | AI Search Visibility & Generative Engine Optimization`,
     description: siteTagline,
     images: [`${siteUrl}/og.png`],
   },
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           }}
         />
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <AnalyticsEvents />
         <Analytics />
       </body>
     </html>

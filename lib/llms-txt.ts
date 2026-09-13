@@ -69,6 +69,11 @@ function corePages(): LinkItem[] {
       note: "How GAiO Engine frames evidence, source coverage, and measurement without vanity guarantees.",
     },
     {
+      title: "Resource library",
+      href: "/resources",
+      note: "GAiO tools, observed proof, methodology, and the research roadmap.",
+    },
+    {
       title: "Topic hubs",
       href: "/topics",
       note: "Connected hubs for GEO fundamentals, citation-ready content, entity authority, and measurement.",
@@ -92,6 +97,26 @@ function corePages(): LinkItem[] {
       title: "Authors and editors",
       href: "/authors",
       note: "Named contributor profiles and editorial accountability.",
+    },
+    {
+      title: "Editorial policy",
+      href: "/editorial-policy",
+      note: "Ownership, claim review, responsible AI assistance, and update controls.",
+    },
+    {
+      title: "Evidence standards",
+      href: "/evidence-standards",
+      note: "Evidence levels, required context, screenshot limits, and anti-fabrication rules.",
+    },
+    {
+      title: "AI visibility measurement",
+      href: "/ai-visibility-measurement",
+      note: "How GAiO records mentions, citations, representation, sources, and commercial signals.",
+    },
+    {
+      title: "Corrections policy",
+      href: "/corrections-policy",
+      note: "How to report errors and how material corrections are recorded.",
     },
     {
       title: "GEO readiness assessment",
@@ -206,7 +231,7 @@ export async function buildLlmsFullTxt(): Promise<string> {
 
   const serviceLines = services.map(
     (service) =>
-      `- **${service.title}**: ${service.copy} Tags: ${service.tags.join(", ")}.`,
+      `- [**${service.title}**](${absoluteUrl(`/services/${service.slug}`)}): ${service.copy} Tags: ${service.tags.join(", ")}.`,
   );
 
   const methodLines = methodSteps.map(

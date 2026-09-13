@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Check, Info, Search, Sparkles } from "lucide-react";
+import { Activity, ArrowRight, BarChart3, Bot, Check, FileSearch, Info, Link2, Network, Search, Sparkles, Users } from "lucide-react";
 import { useMemo, useState, type CSSProperties } from "react";
 
 type QueryScenario = {
@@ -16,6 +16,81 @@ type QueryScenario = {
 };
 
 const engines = ["Google AI Overview", "ChatGPT", "Perplexity", "Gemini"];
+
+const workspaceViews = [
+  {
+    id: "overview",
+    label: "Overview",
+    icon: BarChart3,
+    eyebrow: "Decision view",
+    title: "See the signals that deserve action.",
+    copy: "Bring answer coverage, representation quality, sources, technical access, and commercial outcomes into one accountable view.",
+    signals: ["Engine comparison", "Priority movement", "Owned action queue"],
+  },
+  {
+    id: "prompts",
+    label: "Prompts",
+    icon: Search,
+    eyebrow: "Market questions",
+    title: "Track decisions, not an inflated prompt count.",
+    copy: "Organise a stable set by audience, intent, market, language, and funnel stage so changes remain comparable.",
+    signals: ["Fixed question set", "Intent and persona tags", "Dated answer runs"],
+  },
+  {
+    id: "citations",
+    label: "Citations",
+    icon: Link2,
+    eyebrow: "Source intelligence",
+    title: "Find the sources shaping the answer.",
+    copy: "Separate owned, earned, community, and institutional sources, then inspect which useful assets and independent mentions are missing.",
+    signals: ["Source overlap", "Citation gaps", "Evidence quality"],
+  },
+  {
+    id: "competitors",
+    label: "Competitors",
+    icon: Users,
+    eyebrow: "Category position",
+    title: "Understand who is named—and why.",
+    copy: "Compare representation, source coverage, offer clarity, and independent authority without treating probabilistic answers like fixed rankings.",
+    signals: ["Share of answer", "Narrative differences", "Source advantage"],
+  },
+  {
+    id: "crawlers",
+    label: "Crawlers",
+    icon: Bot,
+    eyebrow: "Technical access",
+    title: "Know whether priority pages can be retrieved.",
+    copy: "Review verified agent access, rendering, status codes, canonical paths, and errors before assuming an editorial problem.",
+    signals: ["Verified user agents", "Page access timeline", "Errors and blocks"],
+  },
+  {
+    id: "content",
+    label: "Content",
+    icon: FileSearch,
+    eyebrow: "Opportunity system",
+    title: "Turn missing answers into owned briefs.",
+    copy: "Connect each gap to the page, evidence, expert, internal links, and next action required to create a better source.",
+    signals: ["Coverage gaps", "Evidence requirements", "Brief priority"],
+  },
+  {
+    id: "entities",
+    label: "Entities",
+    icon: Network,
+    eyebrow: "Knowledge consistency",
+    title: "Make the organisation and its expertise agree.",
+    copy: "Inspect people, services, topics, profiles, markup, and third-party descriptions for contradictions or missing relationships.",
+    signals: ["Identity consistency", "Schema coverage", "Relationship gaps"],
+  },
+  {
+    id: "analytics",
+    label: "Analytics",
+    icon: Activity,
+    eyebrow: "Commercial signals",
+    title: "Connect visibility to useful business outcomes.",
+    copy: "Review AI referrals, assisted journeys, audit starts, bookings, and qualified conversions while stating the limits of attribution.",
+    signals: ["AI referrals", "Assisted actions", "Conversion quality"],
+  },
+] as const;
 
 const scenarios: QueryScenario[] = [
   {
@@ -88,11 +163,13 @@ const readiness = [
 export function VisibilityLab() {
   const [scenarioId, setScenarioId] = useState(scenarios[0].id);
   const [engine, setEngine] = useState(engines[0]);
+  const [workspaceView, setWorkspaceView] = useState<(typeof workspaceViews)[number]["id"]>("overview");
   const scenario = useMemo(
     () => scenarios.find((item) => item.id === scenarioId) ?? scenarios[0],
     [scenarioId],
   );
   const coverage = scenario.coverage[engine];
+  const selectedWorkspaceView = workspaceViews.find((view) => view.id === workspaceView) ?? workspaceViews[0];
 
   return (
     <div className="visibility-lab-shell">
@@ -101,6 +178,34 @@ export function VisibilityLab() {
         <strong>Illustrative workspace</strong>
         <span>Sample observations only—no live model, competitor, or customer data.</span>
       </div>
+
+      <section className="lab-workspace" aria-labelledby="lab-workspace-title">
+        <nav className="lab-workspace-nav" aria-label="Visibility workspace views">
+          <span className="meta">GAiO / Visibility workspace</span>
+          <div role="tablist" aria-label="Workspace module">
+            {workspaceViews.map((view) => {
+              const Icon = view.icon;
+              return (
+                <button type="button" role="tab" aria-selected={workspaceView === view.id} onClick={() => setWorkspaceView(view.id)} key={view.id}>
+                  <Icon size={16} aria-hidden="true" />{view.label}
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+        <div className="lab-workspace-content" role="tabpanel">
+          <div>
+            <p className="eyebrow">{selectedWorkspaceView.eyebrow}</p>
+            <h2 id="lab-workspace-title">{selectedWorkspaceView.title}</h2>
+            <p>{selectedWorkspaceView.copy}</p>
+          </div>
+          <div className="lab-workspace-signals">
+            {selectedWorkspaceView.signals.map((signal, index) => (
+              <article key={signal}><span>0{index + 1}</span><strong>{signal}</strong><small>Inspectable signal</small></article>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <div className="lab-query-panel">
         <div>
