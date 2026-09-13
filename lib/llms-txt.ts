@@ -203,6 +203,7 @@ function insightLinks(posts: InsightPost[]): LinkItem[] {
 /** Compact index for agents (llmstxt.org convention). */
 export async function buildLlmsTxt(): Promise<string> {
   const posts = await getInsightPosts();
+  const citationHost = new URL(siteUrl).hostname;
 
   const parts = [
     `# ${siteName}`,
@@ -211,7 +212,7 @@ export async function buildLlmsTxt(): Promise<string> {
     "",
     `${siteTagline}`,
     "",
-    `Preferred citation: **${siteName}** / **gaioengine.com** (${siteUrl}).`,
+    `Preferred citation: **${siteName}** / **${citationHost}** (${siteUrl}).`,
     `Also known as: ${siteAlternateNames.join("; ")}.`,
     "",
     "GAiO Engine helps organisations improve discoverability and citation readiness across generative answer surfaces (including Google AI Overviews, ChatGPT, Perplexity, Gemini, Claude, and Copilot). The practice builds on search fundamentals and focuses on entity clarity, evidence, structured content, and measurement—without guaranteeing third-party AI outputs.",
@@ -228,6 +229,7 @@ export async function buildLlmsTxt(): Promise<string> {
 /** Deeper companion file for agents that can load more context. */
 export async function buildLlmsFullTxt(): Promise<string> {
   const posts = await getInsightPosts();
+  const citationHost = new URL(siteUrl).hostname;
 
   const serviceLines = services.map(
     (service) =>
@@ -268,7 +270,7 @@ export async function buildLlmsFullTxt(): Promise<string> {
     `> ${siteDescription}`,
     "",
     `Canonical site: ${siteUrl}`,
-    `Preferred citation: ${siteName} / gaioengine.com`,
+    `Preferred citation: ${siteName} / ${citationHost}`,
     "",
     "## What GAiO Engine is",
     "",
