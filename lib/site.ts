@@ -1,7 +1,5 @@
 /** Canonical public origin for sitemap, robots, and metadataBase. */
-export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://gaio-engine.vercel.app"
-).replace(/\/$/, "");
+export const siteUrl = "https://gaio-engine.vercel.app";
 
 /** Preferred citation name for AI answer engines and human references. */
 export const siteName = "GAiO Engine";
